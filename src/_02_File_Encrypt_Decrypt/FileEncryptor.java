@@ -1,6 +1,13 @@
 package _02_File_Encrypt_Decrypt;
 
+import java.io.FileWriter;
+
 public class FileEncryptor {
+	int key = 12;
+	public static void main(String[] args) {
+		FileEncryptor fe = new FileEncryptor();
+		fe.encrypt();
+	}
 	/*
 	 * Encryption is the process of encoding a message or information
 	 * in such a way that only authorized parties can access it and
@@ -20,4 +27,11 @@ public class FileEncryptor {
 	 * Create a program that takes a messager.
 	 * Use any key you want (1 - 25) to shift each letter in the users input and save the final result to a file.
 	 */
+	private void encrypt() {
+		FileWriter fw = new FileWriter("src/_02_File_Encrypt_Decrypt/msg.txt");
+		// TODO Auto-generated method stub
+	for(int i = 0; i < fw.) {
+			
+		}
+	}
 }

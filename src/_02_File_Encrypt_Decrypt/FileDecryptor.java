@@ -1,6 +1,10 @@
 package _02_File_Encrypt_Decrypt;
 
 public class FileDecryptor {
+	int key = 12;
+	public static void main(String[] args) {
+		
+	}
 	/*
 	 * Decryption is the process of taking encoded or encrypted text or other data
 	 * and converting it back into text that you or the computer can read and understand.
@@ -20,3 +24,4 @@ public class FileDecryptor {
 	 * the message, then display it to the user in a JOptionPane.
 	 */
 }
+//c-12 or key
