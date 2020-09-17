@@ -3,6 +3,7 @@ package _03_To_Do_List;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
@@ -19,6 +20,8 @@ public class ToDoList implements ActionListener {
 	Button button4 = new Button("save list");
 	Button button5 = new Button("load list");
 	FileWriter fw;
+	FileReader fr;
+	String reading = "";
 	ArrayList<String> tasks = new ArrayList<String>();
 	/*
 	 * Create a program with five buttons, add task, view tasks, remove task, save
@@ -57,6 +60,10 @@ public class ToDoList implements ActionListener {
 		frame.setVisible(true);
 		frame.pack();
 		button1.addActionListener(this);
+		button2.addActionListener(this);
+		button3.addActionListener(this);
+		button4.addActionListener(this);
+		button5.addActionListener(this);
 	}
 
 	@Override
@@ -65,19 +72,61 @@ public class ToDoList implements ActionListener {
 		arg0.getSource();
 		if (arg0.getSource().equals(button1)) {
 			addTask();
-		} else if(arg0.getSource().equals(button2)) {
-			viewTask();
+		} else if (arg0.getSource().equals(button2)) {
+			viewTasks();
+		} else if (arg0.getSource().equals(button3)) {
+			removeTask();
 		}
 	}
 
-	private void viewTask() {
+	private void removeTask() {
+		String str = JOptionPane.showInputDialog("what should I remove?");
+		char ch = str.charAt(0);
+		boolean bool = false;
+		try {
+			fr = new FileReader("src/_03_To_Do_List/tasks.txt");
+			fw = new FileWriter("src/_03_To_Do_List/tasks.txt");
+			int c = fr.read();
+			while (c != -1) {
+				if (c == ch) {
+					for (int i = 1; i < str.length() - 2; i++) {
+						if (c == str.charAt(i)) {
+							bool = true;
+						}
+					}
+				}
+				if (bool) {
+					
+				}
+				char hc = (char) c;
+				reading += hc;
+				c = fr.read();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+
+	private void viewTasks() {
 		// TODO Auto-generated method stub
-		
+		try {
+			fr = new FileReader("src/_03_To_Do_List/tasks.txt");
+			int c = fr.read();
+			while (c != -1) {
+				char hc = (char) c;
+				reading += hc;
+				c = fr.read();
+			}
+			JOptionPane.showMessageDialog(null, reading);
+			fr.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	private void addTask() {
 		// TODO Auto-generated method stub
-		try {			
+		try {
 			fw = new FileWriter("src/_03_To_Do_List/tasks.txt");
 			fw.write(JOptionPane.showInputDialog("What task should be added?"));
 			fw.close();
