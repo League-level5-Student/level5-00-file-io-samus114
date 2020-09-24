@@ -3,8 +3,11 @@ package _03_To_Do_List;
 import java.awt.Button;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -23,6 +26,9 @@ public class ToDoList implements ActionListener {
 	FileReader fr;
 	String reading = "";
 	ArrayList<String> tasks = new ArrayList<String>();
+	String fp = "";
+	String string = "";
+	String dr = "";
 	/*
 	 * Create a program with five buttons, add task, view tasks, remove task, save
 	 * list, and load list.
@@ -50,6 +56,23 @@ public class ToDoList implements ActionListener {
 	}
 
 	private void start() {
+		try {
+			fr = new FileReader("src/_03_To_Do_List/directory.txt");
+			int c = fr.read();
+			while (c != -1) {
+				dr += "" + (char)c;
+				c = fr.read();
+				
+			}
+			if (!dr.equals("")) {
+				addArr(dr);
+			}
+			fr.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		// TODO Auto-generated method stub
 		frame.add(panel);
 		panel.add(button1);
@@ -66,6 +89,27 @@ public class ToDoList implements ActionListener {
 		button5.addActionListener(this);
 	}
 
+	private void addArr(String str) {
+		// TODO Auto-generated method stub
+		tasks.clear();
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(str));	
+			String line = br.readLine();
+			while(line != null){
+				tasks.add(line);
+				line = br.readLine();
+			}
+			
+			br.close();
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
@@ -76,62 +120,59 @@ public class ToDoList implements ActionListener {
 			viewTasks();
 		} else if (arg0.getSource().equals(button3)) {
 			removeTask();
+		} else if (arg0.getSource().equals(button4)) {
+			saveList();
+		} else {
+			loadList();
 		}
 	}
 
-	private void removeTask() {
-		String str = JOptionPane.showInputDialog("what should I remove?");
-		char ch = str.charAt(0);
-		boolean bool = false;
+	private void loadList() {
+		// TODO Auto-generated method stub
+		fp = JOptionPane.showInputDialog("what is the file path?");
 		try {
-			fr = new FileReader("src/_03_To_Do_List/tasks.txt");
-			fw = new FileWriter("src/_03_To_Do_List/tasks.txt");
-			int c = fr.read();
-			while (c != -1) {
-				if (c == ch) {
-					for (int i = 1; i < str.length() - 2; i++) {
-						if (c == str.charAt(i)) {
-							bool = true;
-						}
-					}
-				}
-				if (bool) {
-					
-				}
-				char hc = (char) c;
-				reading += hc;
-				c = fr.read();
-			}
+			fw = new FileWriter("src/_03_To_Do_List/directory.txt");
+			fw.write(fp);
+			fw.close();
+			addArr(fp);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 	}
 
-	private void viewTasks() {
+	private void saveList() {
 		// TODO Auto-generated method stub
 		try {
-			fr = new FileReader("src/_03_To_Do_List/tasks.txt");
-			int c = fr.read();
-			while (c != -1) {
-				char hc = (char) c;
-				reading += hc;
-				c = fr.read();
+			
+			fw = new FileWriter(fp);
+			for (int i = 0; i < tasks.size(); i++) {
+				string += tasks.get(i) + "\n";
 			}
-			JOptionPane.showMessageDialog(null, reading);
-			fr.close();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
-
-	private void addTask() {
-		// TODO Auto-generated method stub
-		try {
-			fw = new FileWriter("src/_03_To_Do_List/tasks.txt");
-			fw.write(JOptionPane.showInputDialog("What task should be added?"));
+			fw.write(string);
 			fw.close();
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 	}
+
+	private void removeTask() {
+		String toRem = JOptionPane.showInputDialog("what task should be removed?");
+		for (int i = 0; i < tasks.size(); i++) {
+			if (tasks.get(i).equals(toRem)) {
+				tasks.remove(i);
+				break;
+			}
+		}
+	}
+
+	private void viewTasks() {
+		// TODO Auto-generated method stub
+		JOptionPane.showMessageDialog(null, tasks);
+	}
+
+	private void addTask() {
+		// TODO Auto-generated method stub
+		tasks.add(JOptionPane.showInputDialog("what task should be added?"));
+	}
+	
 }
