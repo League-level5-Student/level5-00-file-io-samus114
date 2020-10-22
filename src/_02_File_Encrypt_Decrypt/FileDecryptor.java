@@ -51,3 +51,4 @@ public class FileDecryptor {
 	}
 }
 // c-12 or key
+ //Copyright © 2020 Samson Kempiak

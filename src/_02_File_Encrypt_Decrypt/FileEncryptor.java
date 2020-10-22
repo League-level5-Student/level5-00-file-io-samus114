@@ -56,3 +56,4 @@ public class FileEncryptor {
 		// TODO Auto-generated method stub
 	}
 }
+ //Copyright © 2020 Samson Kempiak

@@ -23,3 +23,4 @@ public class FileRecorder {
 		
 	}
 }
+ //Copyright © 2020 Samson Kempiak
