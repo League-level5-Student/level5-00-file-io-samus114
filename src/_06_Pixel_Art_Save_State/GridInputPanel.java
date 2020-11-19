@@ -1,4 +1,4 @@
-package _06_Pixel_Art_Save_State;
+package _06_Pixel_Art_Save_State;	
 
 import javax.swing.JButton;
 import javax.swing.JLabel;

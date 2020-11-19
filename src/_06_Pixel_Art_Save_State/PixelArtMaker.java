@@ -1,6 +1,8 @@
 package _06_Pixel_Art_Save_State;
 
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -16,7 +18,7 @@ import javax.swing.JFrame;
 import _05_Serialization.SaveData;
 import _06_Pixel_Art_Save_State.ColorSelectionPanel;
 
-public class PixelArtMaker implements MouseListener {
+public class PixelArtMaker implements MouseListener, ActionListener {
 	private JFrame window;
 	private GridInputPanel gip;
 	private GridPanel gp;
@@ -51,6 +53,7 @@ public class PixelArtMaker implements MouseListener {
 		window.add(csp);
 		gp.repaint();
 		gp.addMouseListener(this);
+		saveButton.addActionListener(this);
 		window.pack();
 	}
 	
@@ -83,9 +86,7 @@ public class PixelArtMaker implements MouseListener {
 			System.out.println(csp.getSelectedColor());
 			gp.clickPixel(e.getX(), e.getY());
 			gp.repaint();
-		} else if(e.getSource().equals(saveButton)) {
-			save(gp);
-		}
+		} 
 		
 	}
 
@@ -106,6 +107,15 @@ public class PixelArtMaker implements MouseListener {
 			oos.writeObject(data);
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		if(arg0.getSource().equals(saveButton)) {
+			System.out.println("pressed");
+			save(gp);
 		}
 	}
 }
